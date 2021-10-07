@@ -15,5 +15,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return Carbon::now()->subDays(10);
+    return 'https://app.swaggerhub.com/apis-docs/dima-php/Tasks/1.0.0';
 });
