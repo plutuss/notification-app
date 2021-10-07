@@ -31,15 +31,27 @@ class TaskController extends Controller
         return TaskResource::collection($tasks);
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
+     * @param StoreTaskRequest $request
      * @return Response
      */
     public function store(StoreTaskRequest $request): Response
     {
+        $task = Task::query()->create(
+            $request->only([
+                'title',
+                'deadline',
+                'description',
+                'user_id',
+                'task_status_id',
+            ])
+        );
 
+        return response([
+            'task' => new TaskResource($task),
+            'msg' => __('messages.add_task')
+        ]);
     }
 
 
@@ -56,12 +68,23 @@ class TaskController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateTaskRequest $request
-     * @param int $id
+     * @param Task $task
      * @return Response
      */
-    public function update(UpdateTaskRequest $request, int $id): Response
+    public function update(UpdateTaskRequest $request, Task $task): Response
     {
-        dd($request->validate(), '1213');
+        $task->update($request->only([
+            'title',
+            'deadline',
+            'description',
+            'user_id',
+            'task_status_id',
+        ]));
+
+        return response([
+            'task' => new TaskResource($task),
+            'msg' => __('messages.update_task')
+        ]);
     }
 
     /**
@@ -73,6 +96,8 @@ class TaskController extends Controller
     public function destroy(int $id): Response
     {
         Task::find($id)->delete();
-        return response(['msg' => 'Ok! Task delete']);
+        return response([
+            'msg' => __('messages.delete_task')
+        ]);
     }
 }
