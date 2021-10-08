@@ -17,4 +17,8 @@ return [
     'delete_task' => 'Ok! Task delete',
     'add_task' => 'Ok! Task added',
     'update_task' => 'Ok! Task updated',
+    //user
+    'delete_user' => 'Ok! User delete',
+    'add_user' => 'Ok! User added',
+    'update_user' => 'Ok! User updated',
 ];

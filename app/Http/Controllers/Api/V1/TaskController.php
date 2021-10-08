@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\QueryFilter;
 use App\Filters\TaskFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreTaskRequest;
 use App\Http\Requests\Api\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
@@ -39,13 +37,7 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request): Response
     {
         $task = Task::query()->create(
-            $request->only([
-                'title',
-                'deadline',
-                'description',
-                'user_id',
-                'task_status_id',
-            ])
+            $request->validated()
         );
 
         return response([
@@ -73,13 +65,9 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task): Response
     {
-        $task->update($request->only([
-            'title',
-            'deadline',
-            'description',
-            'user_id',
-            'task_status_id',
-        ]));
+        $task->update(
+            $request->validated()
+        );
 
         return response([
             'task' => new TaskResource($task),
@@ -87,15 +75,14 @@ class TaskController extends Controller
         ]);
     }
 
+
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
+     * @param Task $task
      * @return Response
      */
-    public function destroy(int $id): Response
+    public function destroy(Task $task): Response
     {
-        Task::find($id)->delete();
+       $task->delete();
         return response([
             'msg' => __('messages.delete_task')
         ]);

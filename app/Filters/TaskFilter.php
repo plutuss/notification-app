@@ -5,8 +5,11 @@ namespace App\Filters;
 class TaskFilter extends QueryFilter
 {
 
-
-    public function user_id($val )
+    /**
+     * @param $val
+     * @return mixed
+     */
+    public function user_id($val)
     {
         return $this->builder
             ->when($val, function ($q) use ($val) {
