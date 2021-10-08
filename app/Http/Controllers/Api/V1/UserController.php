@@ -52,9 +52,9 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param User $user
-     * @return Response
+     * @return UserResource
      */
-    public function show(User $user)
+    public function show(User $user): UserResource
     {
         return new UserResource($user);
     }
