@@ -58,4 +58,4 @@ php artisan sail:install && ./vendor/bin/sail up -d
 ./vendor/bin/sail artisan migrate:fresh --seed
 ```
 
-Open the [link](http://localhost/api/v1/)
+Open the [link](http://localhost)
