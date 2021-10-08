@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\QueryFilter;
 use App\Filters\TaskFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreTaskRequest;
 use App\Http\Requests\Api\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
@@ -31,15 +29,21 @@ class TaskController extends Controller
         return TaskResource::collection($tasks);
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
+     * @param StoreTaskRequest $request
      * @return Response
      */
     public function store(StoreTaskRequest $request): Response
     {
+        $task = Task::query()->create(
+            $request->validated()
+        );
 
+        return response([
+            'task' => new TaskResource($task),
+            'msg' => __('messages.add_task')
+        ]);
     }
 
 
@@ -56,23 +60,31 @@ class TaskController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateTaskRequest $request
-     * @param int $id
+     * @param Task $task
      * @return Response
      */
-    public function update(UpdateTaskRequest $request, int $id): Response
+    public function update(UpdateTaskRequest $request, Task $task): Response
     {
-        dd($request->validate(), '1213');
+        $task->update(
+            $request->validated()
+        );
+
+        return response([
+            'task' => new TaskResource($task),
+            'msg' => __('messages.update_task')
+        ]);
     }
 
+
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
+     * @param Task $task
      * @return Response
      */
-    public function destroy(int $id): Response
+    public function destroy(Task $task): Response
     {
-        Task::find($id)->delete();
-        return response(['msg' => 'Ok! Task delete']);
+       $task->delete();
+        return response([
+            'msg' => __('messages.delete_task')
+        ]);
     }
 }

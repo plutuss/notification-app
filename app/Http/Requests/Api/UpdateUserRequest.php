@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -11,9 +12,9 @@ class UpdateUserRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +22,12 @@ class UpdateUserRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'name' => ['string', 'max:255'],
+            'email' => ['string', 'email', 'max:255', Rule::unique('users')->ignore($this->user->id, 'id')],
         ];
     }
+
 }

@@ -4,8 +4,6 @@ namespace App\Filters;
 
 class UserFilter extends QueryFilter
 {
-
-
     /**
      * @param $val
      * @return mixed
