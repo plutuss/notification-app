@@ -27,8 +27,8 @@ class UpdateTaskRequest extends FormRequest
             'title' => ['string', 'min:2', 'max:100'],
             'deadline' => ['string', 'min:3', 'max:50'],
             'description' => ['string', 'min:3', 'max:10000'],
-            'user_id' => ['required'],
-            'task_status_id' => ['required'],
+            'user_id' => ['required','exists:users,id'],
+            'task_status_id' => ['required','exists:task_statuses,id'],
         ];
     }
 }
