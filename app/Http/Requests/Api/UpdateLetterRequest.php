@@ -3,16 +3,15 @@
 namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Hash;
 
-class StoreUserRequest extends FormRequest
+class UpdateLetterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
@@ -22,12 +21,11 @@ class StoreUserRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
+            'subject' => ['required', 'string', 'min:2', 'max:100'],
+            'body' => ['required', 'string', 'min:2', 'max:1500'],
         ];
     }
 
@@ -37,7 +35,7 @@ class StoreUserRequest extends FormRequest
     public function validated(): array
     {
         $data = parent::validated();
-        $data['password'] = Hash::make($data['password']);
+        $data['user_id'] = auth()->id();
         return $data;
     }
 }

@@ -6,6 +6,8 @@ use App\Filters\UserFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreUserRequest;
 use App\Http\Requests\Api\UpdateUserRequest;
+use App\Http\Resources\ContactResource;
+use App\Http\Resources\LetterResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
@@ -17,15 +19,10 @@ use Illuminate\Http\Response;
 class UserController extends Controller
 {
 
-    /**
-     * @param UserFilter $filter
-     * @return AnonymousResourceCollection
-     */
-    public function index(UserFilter $filter): AnonymousResourceCollection
+
+    public function index()
     {
         $users = User::query()
-            ->with(['tasks'])
-            ->filter($filter)
             ->paginate(9);
 
         return UserResource::collection($users);
@@ -33,7 +30,7 @@ class UserController extends Controller
 
 
     /**
-     * @param StoreUserRequest $request
+     * @param  StoreUserRequest  $request
      * @return Application|ResponseFactory|Response
      */
     public function store(StoreUserRequest $request)
@@ -48,21 +45,27 @@ class UserController extends Controller
         ]);
     }
 
+
     /**
-     * Display the specified resource.
-     *
-     * @param User $user
-     * @return UserResource
+     * @param  User  $user
+     * @return array
      */
-    public function show(User $user): UserResource
+    public function show(User $user): array
     {
-        return new UserResource($user);
+
+        $contacts = $user->contacts;
+        $letters = $user->letters;
+
+        return [
+            'contacts' => ContactResource::collection($contacts),
+            'letters' => LetterResource::collection($letters),
+        ];
     }
 
 
     /**
-     * @param UpdateUserRequest $request
-     * @param User $user
+     * @param  UpdateUserRequest  $request
+     * @param  User  $user
      * @return Response
      */
     public function update(UpdateUserRequest $request, User $user): Response
@@ -80,7 +83,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param User $user
+     * @param  User  $user
      * @return Response
      */
     public function destroy(User $user): Response

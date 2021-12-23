@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,8 @@ Route::group([
         });
 
         Route::resource('users', 'UserController')->except(['create', 'edit']);
-        Route::resource('tasks', 'TaskController')->except(['create', 'edit']);
+        Route::resource('letters', 'LetterController');
+        Route::resource('contacts', 'ContactController');
+        Route::post('send-notification', [NotificationController::class, 'send']);
     });
 });

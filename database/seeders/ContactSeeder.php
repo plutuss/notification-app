@@ -4,8 +4,13 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class TaskSeeder extends Seeder
+class ContactSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
     public function run()
     {
         //

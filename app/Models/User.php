@@ -45,13 +45,6 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * @return HasMany
-     */
-    public function tasks(): HasMany
-    {
-        return $this->hasMany(Task::class);
-    }
 
     /**
      * @return mixed
@@ -70,12 +63,18 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * @param Builder $builder
-     * @param QueryFilter $filter
-     * @return Builder
+     * @return HasMany
      */
-    public function scopeFilter(Builder $builder, QueryFilter $filter): Builder
+    public function contacts(): HasMany
     {
-        return $filter->apply($builder);
+        return $this->hasMany(Contact::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function letters(): HasMany
+    {
+        return $this->hasMany(Letter::class);
     }
 }

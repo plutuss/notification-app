@@ -1,17 +1,12 @@
-<p align="center">
-<a href="https://app.swaggerhub.com/apis-docs/dima-php/Tasks/1.0.0" target="_blank">
-<img src="https://www.publicdomainpictures.net/pictures/240000/velka/hands-holding-task-word.jpg" width="400">
-</a>
-</p>
 
 ## Installation
 
 ```shell
- git clone https://github.com/dima-php/task-api.git task
+ git clone https://github.com/ notification-app
 ```
 
 ```shell
- cd task && composer install
+ cd notification-app && composer install
 ```
 
 ```shell
@@ -37,11 +32,6 @@ php artisan key:generate
 php artisan migrate:fresh --seed
 
 ```
-
-
-## Swagger
-
-[Swagger link](https://app.swaggerhub.com/apis-docs/dima-php/Tasks/1.0.0)
 
 ## Run the application
 
