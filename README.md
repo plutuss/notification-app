@@ -2,7 +2,7 @@
 ## Installation
 
 ```shell
- git clone https://github.com/ notification-app
+ git clone https://github.com/shkera/notification-app notification-app
 ```
 
 ```shell
